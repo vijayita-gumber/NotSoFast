@@ -21,7 +21,8 @@
             android:text="Search"
             android:onClick="onSearch"
             android:id="@+id/Bsearch"
-            android:layout_gravity="right" />
+            android:layout_gravity="right"
+            android:textColor="#010101" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -31,19 +32,22 @@
             android:layout_height="wrap_content"
             android:text="Collect"
             android:id="@+id/collect"
-            android:onClick="startButton" />
+            android:onClick="startButton"
+            android:textColor="#010101" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
+            android:text="    Send   "
             android:id="@+id/send"
-            android:onClick="stopButton" />
+            android:onClick="stopButton"
+            android:textColor="#010101" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contributions"
             android:id="@+id/contri"
-            android:onClick="showButton" />
+            android:onClick="showButton"
+            android:textColor="#010101" />
     </LinearLayout>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
