@@ -20,14 +20,11 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.Gmobile;
 import com.example.android.GmobileSvc;
-import com.example.android.Retrofit;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -49,7 +46,7 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
     double latitudeValue , longitudeValue,time ;
     DatabaseHelper myDb;
-    Retrofit rf = new Retrofit();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,25 +79,7 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             locationManager = null ;
             }
         Toast.makeText(this , "Accelerometer Stopped", Toast.LENGTH_SHORT).show();
-
-//        Cursor res = myDb.getAllData();
-//        if(res.getCount() == 0)
-//        {
-//           Toast.makeText(this , "No records" , Toast.LENGTH_LONG).show();
-//        }
-//        else
-//        {
-//            StringBuffer buffer = new StringBuffer();
-//            while(res.moveToNext())
-//            {
-//                rf.senddata(res.getString(0) , res.getString(1) , res.getString(2) ,res.getString(3) ,res.getString(4));
-//            }
-//
-//        }
-
         new SendAsync().execute();
-
-
     }
 
     public void showButton(View v)
@@ -286,13 +265,26 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
                     mobile.setLattitude(res.getString(3));
                     mobile.setLongitude(res.getString(4));
                     gmobileControl.submitGmobile(mobile);
-                    //rf.senddata(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4));
 
                 }
 
             }
 
+
             return null;
         }
+
+        @Override
+        protected void onPostExecute(String str)
+        {
+            Toast.makeText(MapsActivity.this,"Data Sent to Cloud",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        myDb.deleteData();
     }
 }

@@ -41,8 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
         contentValues.put(COL_1,xaxis);
         contentValues.put(COL_2,yaxis);
         contentValues.put(COL_3,zaxis);
-        contentValues.put(COL_4,latitude);
-        contentValues.put(COL_5,longitude);
+        contentValues.put(COL_4, latitude);
+        contentValues.put(COL_5, longitude);
         if(latitude>0 && longitude >0)
         {
             long result = db.insert(TABLE_NAME,null ,contentValues);
@@ -61,5 +61,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + TABLE_NAME , null);
         return res ;
+    }
+
+    public void deleteData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_NAME );
     }
 }
