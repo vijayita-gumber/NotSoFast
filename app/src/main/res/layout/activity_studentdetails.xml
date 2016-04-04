@@ -1,0 +1,91 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="incredible619.notsofast.Studentdetails"
+    android:id="@+id/id"
+    android:background="@mipmap/f">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcome"
+        android:hint="Enter Your Name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rollNo"
+        android:hint="Enter Your RollNo"
+        android:layout_below="@+id/lastname"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SELECT YOUR COURSES :-"
+        android:id="@+id/courses"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#040000" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PCSMA"
+        android:id="@+id/pcsma"
+        android:checked="false"
+        android:layout_below="@+id/courses"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OS"
+        android:id="@+id/os"
+        android:checked="false"
+        android:layout_alignTop="@+id/cn"
+        android:layout_alignEnd="@+id/eMail" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CN"
+        android:id="@+id/cn"
+        android:checked="false"
+        android:layout_below="@+id/courses"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eMail"
+        android:hint="Enter your EMail"
+        android:layout_below="@+id/rollNo"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lastname"
+        android:hint="Enter Your Last Name"
+        android:layout_below="@+id/welcome"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SUBMIT"
+        android:id="@+id/button"
+        android:layout_below="@+id/pcsma"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:onClick="senddetails"
+        android:textColor="#fffefd"
+        android:background="#050505" />
+
+</RelativeLayout>

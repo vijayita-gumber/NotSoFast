@@ -1,0 +1,63 @@
+<LinearLayout
+    android:layout_width ="wrap_content"
+    android:layout_height ="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation ="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+
+        <EditText
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/TFaddress"
+            android:hint="Enter Destination" />
+
+        <Button
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:onClick="onSearch"
+            android:id="@+id/Bsearch"
+            android:layout_gravity="right" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:text="Collect"
+            android:id="@+id/collect"
+            android:onClick="startButton" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:id="@+id/send"
+            android:onClick="stopButton" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contributions"
+            android:id="@+id/contri"
+            android:onClick="showButton" />
+    </LinearLayout>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:id="@+id/map"
+        tools:context="incredible619.notsofast.MapsActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+
+</LinearLayout>
+
+
+
+
+
+
+

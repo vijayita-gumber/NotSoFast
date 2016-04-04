@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "notsofast-efff4",
+    "project_number": "972868855564",
+    "name": "NotSoFast"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972868855564:android:93d12d5512caeb43",
+        "client_id": "android:incredible619.notsofast",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "incredible619.notsofast",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972868855564-ftgk9je834l1n339smdfmu4rqbqlgj6t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "incredible619.notsofast",
+            "certificate_hash": "F1FECEDE5EE92F6886C45AA99CC424816AB0FE8D"
+          }
+        },
+        {
+          "client_id": "972868855564-4us877tv56nq63f8rer4mun27rurda0b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
