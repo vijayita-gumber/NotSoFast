@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -46,6 +47,8 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
     double latitudeValue , longitudeValue,time ;
     DatabaseHelper myDb;
+
+    ArrayList<Gmobile> l = new ArrayList<Gmobile>() ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,13 +267,13 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
                     mobile.setLattitude(res.getString(3));
                     mobile.setLongitude(res.getString(4));
-                    gmobileControl.submitGmobile(mobile);
-
+                   // gmobileControl.submitGmobile(mobile);
+                    l.add(mobile);
                 }
 
             }
-
-
+            String status = gmobileControl.submitGmobileList(l);
+            Log.v("status" , status);
             return null;
         }
 
