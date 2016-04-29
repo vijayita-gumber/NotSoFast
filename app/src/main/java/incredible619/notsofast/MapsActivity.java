@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,8 +15,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +31,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -158,7 +156,7 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
         //speed = location.getSpeed();
        mMap.addMarker(new MarkerOptions().position(latLngg))
-       .setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
+       .setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_marker_yellow));
        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngg));
         //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         Log.v("Location", msg);
