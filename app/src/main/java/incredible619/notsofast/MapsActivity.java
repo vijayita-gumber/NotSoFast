@@ -165,8 +165,8 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
         //altitude =location.getAltitude();
 
         //speed = location.getSpeed();
-       mMap.addMarker(new MarkerOptions().position(latLngg))
-       .setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_marker_yellow));
+        mMap.addMarker(new MarkerOptions().position(latLngg).title("Marker"));
+
        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngg));
         //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         Log.v("Location", msg);
@@ -230,7 +230,9 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
             LatLng latLng =  new LatLng(addresss.getLatitude(), addresss.getLongitude());
             destination = latLng;
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+            mMap.addMarker(new MarkerOptions().position(latLng))
+                    .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+
            /* while (addressList != null)
             {
                 mMap.addMarker(new MarkerOptions()
@@ -412,7 +414,7 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             br.close();
 
         }catch(Exception e){
-            Log.d("Exception while downloading url", e.toString());
+           // Log.d("Exception while downloading url", e.toString());
         }finally{
             iStream.close();
             urlConnection.disconnect();
