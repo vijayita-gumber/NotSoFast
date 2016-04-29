@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -28,8 +29,10 @@ import com.example.android.GmobileSvc;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -143,15 +146,23 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
     public void onLocationChanged(Location location)
     {
         String msg = "New Latitude: " + location.getLatitude()+"\nNew Longitude: "+ location.getLongitude()+"\n Time:"+location.getTime();
+       LatLng latLngg = new LatLng(location.getLatitude(),location.getLongitude());
+
+
         Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
 
         latitudeValue = location.getLatitude();
         longitudeValue= location.getLongitude();
         time =location.getTime();
         //altitude =location.getAltitude();
-        //speed = location.getSpeed();
 
+        //speed = location.getSpeed();
+       mMap.addMarker(new MarkerOptions().position(latLngg))
+       .setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
+       mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngg));
+        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         Log.v("Location", msg);
+
     }
 
     @Override
@@ -191,8 +202,19 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             }
 
             Address addresss = addressList.get(0);
+            //LatLng hcmus = new LatLng(10.762984,106.682329);
+            //LatLng dhsg = new LatLng(10.759677,106.682387);
+
             LatLng latLng =  new LatLng(addresss.getLatitude(), addresss.getLongitude());
             mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+           /* while (addressList != null)
+            {
+                mMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.login1)));
+            }*/
+
+
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         }
 
@@ -221,7 +243,7 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
 
     private void setUpMap() {
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+       // mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         if ( Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -256,10 +278,8 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             {
                 //Toast.makeText(this , "No records" , Toast.LENGTH_LONG).show();
             }
-            else
-            {
-                while(res.moveToNext())
-                {
+            else {
+                while(res.moveToNext()) {
                     Gmobile mobile = new Gmobile();
                     mobile.setXaxis(res.getString(0));
                     mobile.setYaxis(res.getString(1));
@@ -269,6 +289,8 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
                     mobile.setLongitude(res.getString(4));
                    // gmobileControl.submitGmobile(mobile);
                     l.add(mobile);
+
+
                 }
 
             }
@@ -283,6 +305,24 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             Toast.makeText(MapsActivity.this,"Data Sent to Cloud",Toast.LENGTH_LONG).show();
         }
     }
+   /* private class DrawAsync extends AsyncTask<String,String>
+    {
+        @Override
+        protected  String doInBackground(String... params){
+            Cursor res = myDb.getAllData();
+            if(res.getCount() == 0)
+            {
+                //Toast.makeText(this , "No records" , Toast.LENGTH_LONG).show();
+            }
+            else {
+
+
+
+                }
+
+                 return ;
+        }
+    }*/
 
     @Override
     protected void onDestroy()
