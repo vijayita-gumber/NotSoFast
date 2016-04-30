@@ -46,7 +46,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import incredible619.notsofast.server.InterSvc;
+import incredible619.notsofast.server.Pothole2;
 import retrofit.RestAdapter;
+import retrofit.http.HEAD;
 
 public class MapsActivity extends FragmentActivity implements SensorEventListener,LocationListener {
     Context context;
@@ -243,8 +246,9 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
-            // we will now start adding code for the addition of path to the map.
-            // we have the destination path with name latLng.
+            // this is the code for adding the pothole markers
+
+            (new FetchPotholeAsync()).execute();
 
 
         }
@@ -336,6 +340,33 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             Toast.makeText(MapsActivity.this,"Data Sent to Cloud",Toast.LENGTH_LONG).show();
         }
     }
+
+
+    InterSvc interSvc = new RestAdapter.Builder()
+            .setEndpoint(LOCATION_SERVER)
+            .setLogLevel(RestAdapter.LogLevel.FULL)
+            .build()
+            .create(InterSvc.class);
+
+    List<Pothole2> pothole2List;
+
+    private class FetchPotholeAsync extends AsyncTask<String,String,List<Pothole2>> {
+
+        @Override
+        protected List<Pothole2> doInBackground(String... params) {
+            List<Pothole2> list = interSvc.getpothole();
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(List<Pothole2> list)
+        {
+            drawPotholes(list);
+        }
+    }
+
+
+
    /* private class DrawAsync extends AsyncTask<String,String>
     {
         @Override
@@ -347,13 +378,18 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             }
             else {
 
+*/
 
+    private void drawPotholes(List<Pothole2> list){
 
-                }
-
-                 return ;
+        for (Pothole2 piter : list) {
+            LatLng latLngg = new LatLng(Double.parseDouble(piter.getLattitude()),Double.parseDouble(piter.getLongitude()));
+            mMap.addMarker(new MarkerOptions().position(latLngg))
+                    .setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_marker_yellow));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngg));
         }
-    }*/
+
+    }
 
     @Override
     protected void onDestroy()
@@ -414,7 +450,9 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             br.close();
 
         }catch(Exception e){
+
            // Log.d("Exception while downloading url", e.toString());
+
         }finally{
             iStream.close();
             urlConnection.disconnect();
