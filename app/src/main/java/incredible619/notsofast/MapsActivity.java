@@ -49,7 +49,6 @@ import java.util.List;
 import incredible619.notsofast.server.InterSvc;
 import incredible619.notsofast.server.Pothole2;
 import retrofit.RestAdapter;
-import retrofit.http.HEAD;
 
 public class MapsActivity extends FragmentActivity implements SensorEventListener,LocationListener {
     Context context;
@@ -168,9 +167,9 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
         //altitude =location.getAltitude();
 
         //speed = location.getSpeed();
-        mMap.addMarker(new MarkerOptions().position(latLngg).title("Marker"));
+       // mMap.addMarker(new MarkerOptions().position(latLngg).title("Marker"));
 
-       mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngg));
+       //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngg));
         //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         Log.v("Location", msg);
 
@@ -384,8 +383,12 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
         for (Pothole2 piter : list) {
             LatLng latLngg = new LatLng(Double.parseDouble(piter.getLattitude()),Double.parseDouble(piter.getLongitude()));
-            mMap.addMarker(new MarkerOptions().position(latLngg))
-                    .setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_marker_yellow));
+//            mMap.addMarker(new MarkerOptions().position(latLngg))
+//                    .setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_marker_yellow));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngg));
+
+            mMap.addMarker(new MarkerOptions().position(latLngg).title("Marker"));
+
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngg));
         }
 
