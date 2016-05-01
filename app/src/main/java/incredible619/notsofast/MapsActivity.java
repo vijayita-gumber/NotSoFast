@@ -58,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
     Sensor accelerometer ;
     SensorManager sm ;
     LocationManager locationManager;
+    LocationManager startLocManager;
 
     double latitudeValue , longitudeValue,time ;
     DatabaseHelper myDb;
@@ -177,14 +178,14 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
         // we will now start adding code for the addition of path to the map.
         // we have the destination path with name latLng.
 
-        source = latLngg;
-        if(destination!=null){
-            String url = getDirectionsUrl(source, destination);
-
-            DownloadTask downloadTask = new DownloadTask();
-
-            downloadTask.execute(url);
-        }
+//        source = latLngg;
+//        if(destination!=null){
+//            String url = getDirectionsUrl(source, destination);
+//
+//            DownloadTask downloadTask = new DownloadTask();
+//
+//            downloadTask.execute(url);
+//        }
 
     }
 
@@ -252,6 +253,14 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
 
         }
+
+        this.startLocManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        checkPermission();
+        LocationListener locationListener = new MyLocationListener();
+        startLocManager.requestLocationUpdates(
+                //LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
 
 
     }
@@ -359,8 +368,8 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             for (PotholeDouble2 pditer: pdlist) {
                 Pothole2 pothole2 = new Pothole2();
                 pothole2.setLattitude(pditer.getLattitude()+"");
-                pothole2.setLongitude(pditer.getLongitude()+"");
-                pothole2.setDiff(pditer.getDiff()+"");
+                pothole2.setLongitude(pditer.getLongitude() + "");
+                pothole2.setDiff(pditer.getDiff() + "");
                 list.add(pothole2);
             }
             Log.d("vince MapsActivity","size of list returned: "+list.size());
@@ -560,6 +569,39 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
             // Drawing polyline in the Google Map for the i-th route
             mMap.addPolyline(lineOptions);
         }
+    }
+
+    /*---------- Listener class to get coordinates ------------- */
+    private class MyLocationListener implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location loc) {
+
+            String longitude = "Longitude: " + loc.getLongitude();
+            //Log.v(TAG, longitude);
+            String latitude = "Latitude: " + loc.getLatitude();
+            //Log.v(TAG, latitude);
+            LatLng latLngg = new LatLng(loc.getLatitude(),loc.getLongitude());
+            source = latLngg;
+            if(destination!=null){
+                String url = getDirectionsUrl(source, destination);
+
+                DownloadTask downloadTask = new DownloadTask();
+
+                downloadTask.execute(url);
+            }
+
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {}
+
+        @Override
+        public void onProviderEnabled(String provider) {}
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
     }
 
 }
