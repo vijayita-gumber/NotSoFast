@@ -16,12 +16,20 @@
             android:hint="Enter Destination" />
 
         <Button
-            android:layout_width="205dp"
+            android:layout_width="98dp"
             android:layout_height="wrap_content"
             android:text="Search"
             android:onClick="onSearch"
             android:id="@+id/Bsearch"
             android:layout_gravity="right"
+            android:textColor="#010101" />
+
+        <Button
+            android:layout_width="91dp"
+            android:layout_height="wrap_content"
+            android:text="All"
+            android:onClick="showPotholes"
+            android:id="@+id/button"
             android:textColor="#010101" />
     </LinearLayout>
     <LinearLayout

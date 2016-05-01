@@ -2,6 +2,7 @@ package incredible619.notsofast;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -17,6 +18,8 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -50,6 +53,10 @@ import incredible619.notsofast.server.InterSvc;
 import incredible619.notsofast.server.Pothole2;
 import incredible619.notsofast.server.PotholeDouble2;
 import retrofit.RestAdapter;
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.Pointer;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
 
 public class MapsActivity extends FragmentActivity implements SensorEventListener,LocationListener {
     Context context;
@@ -62,6 +69,8 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
     double latitudeValue , longitudeValue,time ;
     DatabaseHelper myDb;
+    TourGuide mTourGuideHandler;
+    int count=0;
 
     ArrayList<Gmobile> l = new ArrayList<Gmobile>() ;
 
@@ -69,11 +78,81 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
         sm = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         myDb = new DatabaseHelper(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if(!prefs.getBoolean("firstTime", false)) {
+            nextShowcase();
+            // run your one time code
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstTime", true);
+            editor.commit();
+        }
+
         setUpMapIfNeeded();
+    }
+    public void nextShowcase()
+    {
+        if( mTourGuideHandler!=null)
+        {mTourGuideHandler.cleanUp();}
+        if(count==0)
+        {
+            mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click)
+                    .setPointer(new Pointer())
+                    .setToolTip(new ToolTip().setTitle("Enter Destination").setDescription(" "))
+                    .setOverlay(new Overlay())
+                    .playOn(findViewById(R.id.TFaddress));
+
+        }
+        else if(count==1)
+        {
+            mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click)
+                    .setPointer(new Pointer())
+                    .setToolTip(new ToolTip().setTitle("Click on Search").setDescription(""))
+                    .setOverlay(new Overlay())
+                    .playOn(findViewById(R.id.Bsearch));
+        }
+        else if(count==2)
+        {
+            mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click)
+                    .setPointer(new Pointer())
+                    .setToolTip(new ToolTip().setTitle("View All Potholes").setDescription(" "))
+                    .setOverlay(new Overlay())
+                    .playOn(findViewById(R.id.button));
+        }
+        else if(count==3)
+        {
+            mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click)
+                    .setPointer(new Pointer())
+                    .setToolTip(new ToolTip().setTitle("Accelerometer will start and data will be collected").setDescription(" "))
+                    .setOverlay(new Overlay())
+                    .playOn(findViewById(R.id.collect));
+        }
+        else if(count==4)
+        {
+            mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click)
+                    .setPointer(new Pointer())
+                    .setToolTip(new ToolTip().setTitle("Accelerometer will stop and data send to cloud").setDescription(" "))
+                    .setOverlay(new Overlay())
+                    .playOn(findViewById(R.id.send));
+        }
+        else if(count==5)
+        {
+            mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click)
+                    .setPointer(new Pointer())
+                    .setToolTip(new ToolTip().setTitle("See Your Contributions").setDescription(" "))
+                    .setOverlay(new Overlay())
+                    .playOn(findViewById(R.id.contri));
+        }
+        count++;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                nextShowcase();
+            }
+        }, 2000);
+
     }
 
     public void startButton(View v)
@@ -86,6 +165,7 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
         Toast.makeText(this, "Accelerometer Started", Toast.LENGTH_SHORT).show();
     }
+
 
     public void stopButton(View v)
     {
@@ -260,7 +340,7 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
         LocationListener locationListener = new MyLocationListener();
         startLocManager.requestLocationUpdates(
                 //LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-                LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
+                LocationManager.NETWORK_PROVIDER, 5000, 100, locationListener);
 
 
     }
