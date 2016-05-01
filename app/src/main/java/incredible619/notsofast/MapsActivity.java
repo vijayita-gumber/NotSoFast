@@ -249,7 +249,7 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
             // this is the code for adding the pothole markers
 
-            (new FetchPotholeAsync()).execute();
+            //(new FetchPotholeAsync()).execute(addresss.getLatitude()+"",addresss.getLongitude()+"");
 
 
         }
@@ -363,8 +363,11 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
         @Override
         protected List<Pothole2> doInBackground(String... params) {
+            Double latt = Double.parseDouble(params[0]);
+            Double longi = Double.parseDouble(params[1]);
+
             List<Pothole2> list = new ArrayList<>();//interSvc.getpothole();
-            List<PotholeDouble2> pdlist = interSvc.getpotholedouble();
+            List<PotholeDouble2> pdlist = interSvc.getpotholelatlngdec(latt,longi,.005);//interSvc.getpotholedouble();
             for (PotholeDouble2 pditer: pdlist) {
                 Pothole2 pothole2 = new Pothole2();
                 pothole2.setLattitude(pditer.getLattitude()+"");
@@ -372,6 +375,8 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
                 pothole2.setDiff(pditer.getDiff() + "");
                 list.add(pothole2);
             }
+            Log.d("vince MapsActivity","latt: "+latt);
+            Log.d("vince MapsActivity","longi: "+longi);
             Log.d("vince MapsActivity","size of list returned: "+list.size());
             return list;
         }
@@ -590,6 +595,8 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
                 downloadTask.execute(url);
             }
+
+            (new FetchPotholeAsync()).execute(loc.getLatitude()+"",loc.getLongitude()+"");
 
 
         }
