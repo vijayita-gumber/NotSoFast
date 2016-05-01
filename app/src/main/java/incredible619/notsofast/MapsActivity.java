@@ -48,6 +48,7 @@ import java.util.List;
 
 import incredible619.notsofast.server.InterSvc;
 import incredible619.notsofast.server.Pothole2;
+import incredible619.notsofast.server.PotholeDouble2;
 import retrofit.RestAdapter;
 
 public class MapsActivity extends FragmentActivity implements SensorEventListener,LocationListener {
@@ -353,7 +354,16 @@ public class MapsActivity extends FragmentActivity implements SensorEventListene
 
         @Override
         protected List<Pothole2> doInBackground(String... params) {
-            List<Pothole2> list = interSvc.getpothole();
+            List<Pothole2> list = new ArrayList<>();//interSvc.getpothole();
+            List<PotholeDouble2> pdlist = interSvc.getpotholedouble();
+            for (PotholeDouble2 pditer: pdlist) {
+                Pothole2 pothole2 = new Pothole2();
+                pothole2.setLattitude(pditer.getLattitude()+"");
+                pothole2.setLongitude(pditer.getLongitude()+"");
+                pothole2.setDiff(pditer.getDiff()+"");
+                list.add(pothole2);
+            }
+            Log.d("vince MapsActivity","size of list returned: "+list.size());
             return list;
         }
 
